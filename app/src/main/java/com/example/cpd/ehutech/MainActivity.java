@@ -22,7 +22,6 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,13 +29,13 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Hutech - University");
-        Intent intent; //Intent dùng để chuyển từ màn hình này qua màn hình kia*google thêm*
+        final Intent intent; //Intent dùng để chuyển từ màn hình này qua màn hình kia*google thêm*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Nhấn vào đấy sẽ ra cái web tụi kia làm", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               Intent intent = new Intent(MainActivity.this,DrawSignatureActivity.class);
+               startActivity(intent);
             }
         });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -18,4 +18,8 @@
     <string name="error_incorrect_password">Sai Mật Khẩu</string>
     <string name="error_invalid_password">Bạn Phải Nhập Mật Khẩu!</string>
     <string name="logout">Đăng Xuất</string>
+    <string name="logo">Ảnh Logo</string>
+    <!-- String related to Signature Drawing -->
+    <string name="save">Lưu Chữ Ký</string>
+    <string name="drawing_new">Ký Lại</string>
 </resources>
