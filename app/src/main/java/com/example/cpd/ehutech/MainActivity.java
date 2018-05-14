@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity
             Intent sv5t = new Intent(this, SV5TActivity.class);
             startActivity(sv5t);
         } else if (id == R.id.nav_lhtt) {
-
+            Intent sv5t = new Intent(this, SV5TActivity.class);
+            startActivity(sv5t);
         } else if (id == R.id.nav_nckh) {
 
         } else  if (id == R.id.nav_help) {
