@@ -22,4 +22,11 @@
     <!-- String related to Signature Drawing -->
     <string name="save">Lưu Chữ Ký</string>
     <string name="drawing_new">Ký Lại</string>
+    <!--Từ ngũ trong SV5T-->
+    <string name="TCDD"> Đạo đức</string>
+    <string name="TCHT"> Học tập</string>
+    <string name="TCTL"> Thể lực</string>
+    <string name="TCTN"> Tình nguyện</string>
+    <string name="TCHN"> Hội nhập</string>
+    <string name="TCUT"> Ưu tiên</string>
 </resources>
