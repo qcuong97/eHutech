@@ -19,17 +19,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.example.cpd.ehutech.model.Results_;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    Results_ results_ = new Results_();
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /*--------Anh Xa---------*/
+        TextView txt_ten = (TextView)findViewById(R.id.txt_ten);
+        TextView txt_lop = (TextView)findViewById(R.id.txt_lop);
+        TextView txt_khoa = (TextView)findViewById(R.id.txt_khoa);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Hutech - University");
-        final Intent intent; //Intent dùng để chuyển từ màn hình này qua màn hình kia*google thêm*
+        /*Add ten vao nav_header_main*/
+        intent = getIntent();
+        String ten = intent.getStringExtra("Ten");
+        String lop = intent.getStringExtra("Lop");
+        String khoa = intent.getStringExtra("Khoa");
+        txt_ten.setText(ten);
+        /*txt_lop.setText(intent.getStringExtra("Lop"));
+        txt_khoa.setText(intent.getStringExtra("Khoa"));*/
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +63,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override

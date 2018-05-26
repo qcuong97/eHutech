@@ -24,8 +24,7 @@
         android:id="@+id/txt_ten"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/textview_menu"
-        android:text="Tên...."/>
+        style="@style/textview_menu" />
 
     <TextView
         android:id="@+id/txt_lop"
@@ -33,13 +32,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_ten"
         style="@style/textview_menu"
-        android:text="Lớp..." />
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txt_khoa"
         android:layout_below="@+id/txt_lop"
         style="@style/textview_menu"
-        android:text="Khoa...." />
+        />
 
 </RelativeLayout>
