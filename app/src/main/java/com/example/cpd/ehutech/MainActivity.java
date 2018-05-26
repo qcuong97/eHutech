@@ -33,20 +33,21 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         /*--------Anh Xa---------*/
-        TextView txt_ten = (TextView)findViewById(R.id.txt_ten);
-        TextView txt_lop = (TextView)findViewById(R.id.txt_lop);
-        TextView txt_khoa = (TextView)findViewById(R.id.txt_khoa);
+        intent = getIntent();
+        NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView txt_ten = (TextView) headerView.findViewById(R.id.txt_ten);
+            txt_ten.setText(intent.getStringExtra("Ten"));
+        TextView txt_lop = (TextView) headerView.findViewById(R.id.txt_lop);
+            txt_lop.setText(intent.getStringExtra("Lop"));
+        TextView txt_khoa = (TextView) headerView.findViewById(R.id.txt_khoa);
+            txt_khoa.setText(intent.getStringExtra("Khoa"));
+         /*-----------Toolbar cai tren đầu-------------*/
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Hutech - University");
-        /*Add ten vao nav_header_main*/
-        intent = getIntent();
-        String ten = intent.getStringExtra("Ten");
-        String lop = intent.getStringExtra("Lop");
-        String khoa = intent.getStringExtra("Khoa");
-        txt_ten.setText(ten);
-        /*txt_lop.setText(intent.getStringExtra("Lop"));
-        txt_khoa.setText(intent.getStringExtra("Khoa"));*/
+        /*-------------Floatting Action------*/
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,10 +61,6 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
     }
 
     @Override
