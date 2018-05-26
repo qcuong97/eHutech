@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/SV5T"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:text="Các tiêu chí Sinh viên 5 tốt"
+        android:textSize="30dp"
+        android:textColor="#ff0000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ExpandableListView
+        android:id="@+id/TCSV5T"
+        android:listSelector="#21f5a8"
+        android:divider="#001eff"
+        android:dividerHeight="1dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    </ExpandableListView>
+
+    <TextView
+        android:id="@+id/txtChinhsua"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:text="Chỉnh sửa"
+        android:textSize="20dp"
+        android:clickable="true"
+        android:onClick="txtChinhsuaAction"/>
+
+    <TextView
+        android:id="@+id/txtLuu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:paddingRight="20dp"
+        android:visibility="gone"
+        android:text="Lưu"
+        android:paddingTop="20dp"
+        android:textSize="20dp"
+        android:clickable="true"
+        android:onClick="txtLuuAction"/>
+
+</LinearLayout>
