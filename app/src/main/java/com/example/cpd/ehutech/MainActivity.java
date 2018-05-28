@@ -18,10 +18,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cpd.ehutech.model.Login.Results_;
 import com.example.cpd.ehutech.model.SV5T.GetTTinTChiSV5T;
 import com.example.cpd.ehutech.model.SV5T.Row;
-import com.example.cpd.ehutech.service.APIService;
+import com.example.cpd.ehutech.remote.ApiUtils;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,11 +30,9 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    Results_ results_ = new Results_();
     Intent intent;
     SV5T a = new SV5T();
-    Row row = new Row();
-    APIService apiService;
+    List<Row> row;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +42,13 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
+        a.sharedPreferences = getSharedPreferences(a.MyPREFERENCES, Context.MODE_PRIVATE);
         TextView txt_ten = (TextView) headerView.findViewById(R.id.txt_ten);
-            txt_ten.setText(intent.getStringExtra("Ten"));
+            txt_ten.setText(a.sharedPreferences.getString(a.Ten,""));
         TextView txt_lop = (TextView) headerView.findViewById(R.id.txt_lop);
-            txt_lop.setText(intent.getStringExtra("Lop"));
+            txt_lop.setText(a.sharedPreferences.getString(a.Lop,""));
         TextView txt_khoa = (TextView) headerView.findViewById(R.id.txt_khoa);
-            txt_khoa.setText(intent.getStringExtra("Khoa"));
+            txt_khoa.setText(a.sharedPreferences.getString(a.Khoa,""));
          /*-----------Toolbar cai tren đầu-------------*/
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -103,8 +103,8 @@ public class MainActivity extends AppCompatActivity
         String token = "Bearer " + a.sharedPreferences.getString(a.Token, "");
         String mssv = a.sharedPreferences.getString(a.MSSV, "");
 
-
-        Call<GetTTinTChiSV5T> call = apiService.getTTinTChiSV5T(token, mssv);
+        a.apiService = ApiUtils.getUserService();
+        Call<GetTTinTChiSV5T> call = a.apiService.getTTinTChiSV5T(mssv, token);
         call.enqueue(new Callback<GetTTinTChiSV5T>() {
             @Override
             public void onResponse(Call<GetTTinTChiSV5T> call, Response<GetTTinTChiSV5T> response) {

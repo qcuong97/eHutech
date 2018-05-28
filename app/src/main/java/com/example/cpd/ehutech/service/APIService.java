@@ -16,5 +16,5 @@ public interface APIService {
     Call<TrangThai> login_mssv(@Body Post post);
 
     @GET("sinhvien_5t/mssv/{mssv}?fields=[\"$all\"]")
-    Call<GetTTinTChiSV5T> getTTinTChiSV5T(@Header("Authorization") String token, @Path("mssv") String mssv);
+    Call<GetTTinTChiSV5T> getTTinTChiSV5T(@Path("mssv") String mssv, @Header("Authorization") String token);
 }

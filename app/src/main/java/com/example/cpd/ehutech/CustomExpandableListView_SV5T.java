@@ -74,7 +74,6 @@ public class CustomExpandableListView_SV5T extends BaseExpandableListAdapter{
         convertView = inflater.inflate(R.layout.listview_item_sv5t, null);
         TextView txtChild = (TextView) convertView.findViewById(R.id.checkboxChild);
         txtChild.setText(item);
-        txtChild.setClickable(false);
         return convertView;
     }
 

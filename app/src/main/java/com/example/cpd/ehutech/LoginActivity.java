@@ -46,6 +46,9 @@ public class LoginActivity extends AppCompatActivity {
     String MyPREFERENCES = "MyPrefs";
     String MSSV = "mMSSV";
     String Token = "token";
+    String Ten = "hoten";
+    String Lop = "lop";
+    String Khoa = "khoa";
     String username;
     String pass;
     Results_ results;
@@ -182,12 +185,12 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(MSSV,results.getUsername());
                     editor.putString(Token, results.getToken());
+                    editor.putString(Ten,results.getHoten());
+                    editor.putString(Lop,results.getTenlop());
+                    editor.putString(Khoa,results.getTenkhoa());
                     editor.apply();
                     Toast.makeText(LoginActivity.this, "Xin Chao " + results.getHoten() + "", Toast.LENGTH_LONG).show();
                     intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("Ten",results.getHoten());
-                    intent.putExtra("Lop",results.getTenlop());
-                    intent.putExtra("Khoa",results.getTenkhoa());
                     startActivity(intent);
                 } else {
                     Toast.makeText(LoginActivity.this, "Đã Xảy Ra Lỗi!!Hãy Thử Lại!!", Toast.LENGTH_SHORT).show();

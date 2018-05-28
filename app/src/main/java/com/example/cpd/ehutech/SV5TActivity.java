@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.example.cpd.ehutech.model.SV5T.Results;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,22 +13,20 @@ import java.util.List;
 
 public class SV5TActivity extends AppCompatActivity {
 
+
     TextView txtChinhsua, txtLuu;
     ExpandableListView expandableListView;
     List<String> listdataHeader;
     HashMap<String, List<String>> listdataChild;
     CustomExpandableListView_SV5T customExpandableListView_sv5t;
-    Results results;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sv5_t);
-
+        expandableListView = (ExpandableListView) findViewById(R.id.TCSV5T);
         Anhxa();
         Addcontrol();
-
         customExpandableListView_sv5t = new CustomExpandableListView_SV5T(SV5TActivity.this, listdataHeader, listdataChild);
         expandableListView.setAdapter(customExpandableListView_sv5t);
 
@@ -57,7 +53,6 @@ public class SV5TActivity extends AppCompatActivity {
 
     private void Addcontrol()
     {
-        expandableListView = (ExpandableListView) findViewById(R.id.TCSV5T);
         listdataHeader = new ArrayList<>();
         listdataChild = new HashMap<String, List<String>>();
 
@@ -114,5 +109,8 @@ public class SV5TActivity extends AppCompatActivity {
         listdataChild.put(listdataHeader.get(3), TCTN);
         listdataChild.put(listdataHeader.get(4), TCHN);
         listdataChild.put(listdataHeader.get(5), TCUT);
+    }
+
+    class ttintchi extends MainActivity{
     }
 }
