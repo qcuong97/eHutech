@@ -1,33 +1,39 @@
 package com.example.cpd.ehutech;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.ShareActionProvider;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.cpd.ehutech.model.Results_;
+import com.example.cpd.ehutech.model.Login.Results_;
+import com.example.cpd.ehutech.model.SV5T.GetTTinTChiSV5T;
+import com.example.cpd.ehutech.model.SV5T.Row;
+import com.example.cpd.ehutech.service.APIService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Results_ results_ = new Results_();
     Intent intent;
+    SV5T a = new SV5T();
+    Row row = new Row();
+    APIService apiService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,8 +84,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_sv5t) {
-            Intent sv5t = new Intent(this, SV5TActivity.class);
-            startActivity(sv5t);
+            doGetInfoTChiSV5T();
         } else if (id == R.id.nav_lhtt) {
 
         } else if (id == R.id.nav_nckh) {
@@ -92,6 +97,33 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void doGetInfoTChiSV5T() {
+        a.sharedPreferences = getSharedPreferences(a.MyPREFERENCES, Context.MODE_PRIVATE);
+        String token = "Bearer " + a.sharedPreferences.getString(a.Token, "");
+        String mssv = a.sharedPreferences.getString(a.MSSV, "");
+
+
+        Call<GetTTinTChiSV5T> call = apiService.getTTinTChiSV5T(token, mssv);
+        call.enqueue(new Callback<GetTTinTChiSV5T>() {
+            @Override
+            public void onResponse(Call<GetTTinTChiSV5T> call, Response<GetTTinTChiSV5T> response) {
+                if (response.isSuccessful()) {
+                    row = response.body().getResults().getObject().getRows();
+                    intent = new Intent(MainActivity.this, SV5TActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "Đã Xảy Ra Lỗi!!Hãy Thử Lại!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetTTinTChiSV5T> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Ket Noi Loi", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     public void onClicked_logout(){
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -112,13 +144,16 @@ public class MainActivity extends AppCompatActivity
                 .setNegativeButton("No", dialogClickListener).show();
     }
     public  void cancel_sharedPre(){
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        a.sharedPreferences = getSharedPreferences(a.MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = a.sharedPreferences.edit();
         editor.clear();
         editor.commit();
         Intent intent;
         intent = new Intent(MainActivity.this,LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    class SV5T extends LoginActivity{
     }
 }

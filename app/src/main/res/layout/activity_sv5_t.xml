@@ -6,13 +6,6 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:text="Các tiêu chí Sinh viên 5 tốt"
-        android:textSize="30dp"
-        android:textColor="#ff0000"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <ExpandableListView
         android:id="@+id/TCSV5T"
         android:listSelector="#21f5a8"

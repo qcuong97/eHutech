@@ -1,4 +1,4 @@
-package com.example.cpd.ehutech.model;
+package com.example.cpd.ehutech.model.Login;
 
 public class ThongtinSinhvien {
     public String getMssv() {

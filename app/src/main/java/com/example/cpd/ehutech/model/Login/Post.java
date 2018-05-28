@@ -1,4 +1,4 @@
-package com.example.cpd.ehutech.model;
+package com.example.cpd.ehutech.model.Login;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

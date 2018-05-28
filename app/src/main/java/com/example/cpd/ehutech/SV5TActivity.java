@@ -1,13 +1,12 @@
 package com.example.cpd.ehutech;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+
+import com.example.cpd.ehutech.model.SV5T.Results;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +20,8 @@ public class SV5TActivity extends AppCompatActivity {
     List<String> listdataHeader;
     HashMap<String, List<String>> listdataChild;
     CustomExpandableListView_SV5T customExpandableListView_sv5t;
+    Results results;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

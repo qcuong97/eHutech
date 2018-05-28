@@ -1,53 +1,27 @@
 package com.example.cpd.ehutech;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cpd.ehutech.model.Post;
-import com.example.cpd.ehutech.model.Results_;
-import com.example.cpd.ehutech.model.TrangThai;
+import com.example.cpd.ehutech.model.Login.Post;
+import com.example.cpd.ehutech.model.Login.Results_;
+import com.example.cpd.ehutech.model.Login.TrangThai;
 import com.example.cpd.ehutech.remote.ApiUtils;
-import com.example.cpd.ehutech.service.LoginService;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import com.example.cpd.ehutech.service.APIService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
@@ -69,14 +43,15 @@ public class LoginActivity extends AppCompatActivity {
     public Intent intent;
     private EditText mMssvView;
     private EditText mPasswordView;
-    public static final String MyPREFERENCES = "MyPrefs";
-    public static final String MSSV = "mMSSV";
+    String MyPREFERENCES = "MyPrefs";
+    String MSSV = "mMSSV";
+    String Token = "token";
     String username;
     String pass;
     Results_ results;
     SharedPreferences sharedPreferences;
     Post post_login = new Post();
-    LoginService loginService;
+    APIService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }
-        loginService = ApiUtils.getUserService();
+        apiService = ApiUtils.getUserService();
         Button mLogin = (Button) findViewById(R.id.mssv_login);
         mLogin.setOnClickListener(new OnClickListener() {
             @Override
@@ -198,14 +173,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void doLogin(Post post) {
-        Call<TrangThai> call = loginService.login_mssv(post);
+        Call<TrangThai> call = apiService.login_mssv(post);
         call.enqueue(new Callback<TrangThai>() {
             @Override
             public void onResponse(Call<TrangThai> call, Response<TrangThai> response) {
                 if (response.isSuccessful()) {
                     results = response.body().getResults().getObject().getResults();
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(MSSV,results.getId());
+                    editor.putString(MSSV,results.getUsername());
+                    editor.putString(Token, results.getToken());
                     editor.apply();
                     Toast.makeText(LoginActivity.this, "Xin Chao " + results.getHoten() + "", Toast.LENGTH_LONG).show();
                     intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -224,4 +200,3 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
-
