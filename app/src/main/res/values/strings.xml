@@ -29,4 +29,5 @@
     <string name="TCTN"> Tình nguyện</string>
     <string name="TCHN"> Hội nhập</string>
     <string name="TCUT"> Ưu tiên</string>
+    <string name="loading">Đang Kết Nối....</string>
 </resources>

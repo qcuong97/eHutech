@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loading"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -12,13 +13,6 @@
     android:background="@drawable/sky_bg"
     tools:context=".LoginActivity">
     <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
         <LinearLayout
             android:id="@+id/mssv_login_form"
             android:layout_width="850dp"
@@ -66,4 +60,26 @@
                 android:textStyle="bold"
                 android:background="@color/colorButonlogin"/>
         </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rela_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mssv_login_form"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible">
+        <ProgressBar
+            android:id="@+id/progress_bar_load"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" />
+        <TextView
+            android:id="@+id/txt_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/progress_bar_load"
+            android:gravity="center"
+            android:text="@string/loading" />
+    </RelativeLayout>
 </RelativeLayout>

@@ -1,10 +1,14 @@
 package com.example.cpd.ehutech;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+
+import com.example.cpd.ehutech.model.SV5T.Row;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,12 +23,12 @@ public class SV5TActivity extends AppCompatActivity {
     List<String> listdataHeader;
     HashMap<String, List<String>> listdataChild;
     CustomExpandableListView_SV5T customExpandableListView_sv5t;
-
+    Row row = new Row();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sv5_t);
-        expandableListView = (ExpandableListView) findViewById(R.id.TCSV5T);
+        getInfoSV5T();
         Anhxa();
         Addcontrol();
         customExpandableListView_sv5t = new CustomExpandableListView_SV5T(SV5TActivity.this, listdataHeader, listdataChild);
@@ -47,6 +51,7 @@ public class SV5TActivity extends AppCompatActivity {
 
     private void Anhxa()
     {
+        expandableListView = (ExpandableListView) findViewById(R.id.TCSV5T);
         txtChinhsua = (TextView) findViewById(R.id.txtChinhsua);
         txtLuu = (TextView) findViewById(R.id.txtLuu);
     }
@@ -111,6 +116,9 @@ public class SV5TActivity extends AppCompatActivity {
         listdataChild.put(listdataHeader.get(5), TCUT);
     }
 
-    class ttintchi extends MainActivity{
+    void getInfoSV5T(){
+        Gson gson = new Gson();
+        String getInfSV5T = getIntent().getStringExtra("InfoSV5T");
+        row = gson.fromJson(getInfSV5T,Row.class);
     }
 }

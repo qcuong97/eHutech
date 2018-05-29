@@ -21,7 +21,9 @@ import android.widget.Toast;
 import com.example.cpd.ehutech.model.SV5T.GetTTinTChiSV5T;
 import com.example.cpd.ehutech.model.SV5T.Row;
 import com.example.cpd.ehutech.remote.ApiUtils;
+import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,24 +34,27 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Intent intent;
     SV5T a = new SV5T();
-    List<Row> row;
+    Row row = new Row();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*--------Anh Xa---------*/
+        Anhxa();
+
+    }
+    private void Anhxa(){
         intent = getIntent();
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
         a.sharedPreferences = getSharedPreferences(a.MyPREFERENCES, Context.MODE_PRIVATE);
         TextView txt_ten = (TextView) headerView.findViewById(R.id.txt_ten);
-            txt_ten.setText(a.sharedPreferences.getString(a.Ten,""));
+        txt_ten.setText(a.sharedPreferences.getString(a.Ten,""));
         TextView txt_lop = (TextView) headerView.findViewById(R.id.txt_lop);
-            txt_lop.setText(a.sharedPreferences.getString(a.Lop,""));
+        txt_lop.setText(a.sharedPreferences.getString(a.Lop,""));
         TextView txt_khoa = (TextView) headerView.findViewById(R.id.txt_khoa);
-            txt_khoa.setText(a.sharedPreferences.getString(a.Khoa,""));
-         /*-----------Toolbar cai tren đầu-------------*/
+        txt_khoa.setText(a.sharedPreferences.getString(a.Khoa,""));
+        /*-----------Toolbar cai tren đầu-------------*/
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Hutech - University");
@@ -58,8 +63,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Intent intent = new Intent(MainActivity.this,DrawSignatureActivity.class);
-               startActivity(intent);
+                Intent intent = new Intent(MainActivity.this,DrawSignatureActivity.class);
+                startActivity(intent);
             }
         });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -68,7 +73,6 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -102,15 +106,17 @@ public class MainActivity extends AppCompatActivity
         a.sharedPreferences = getSharedPreferences(a.MyPREFERENCES, Context.MODE_PRIVATE);
         String token = "Bearer " + a.sharedPreferences.getString(a.Token, "");
         String mssv = a.sharedPreferences.getString(a.MSSV, "");
-
         a.apiService = ApiUtils.getUserService();
         Call<GetTTinTChiSV5T> call = a.apiService.getTTinTChiSV5T(mssv, token);
         call.enqueue(new Callback<GetTTinTChiSV5T>() {
             @Override
             public void onResponse(Call<GetTTinTChiSV5T> call, Response<GetTTinTChiSV5T> response) {
                 if (response.isSuccessful()) {
-                    row = response.body().getResults().getObject().getRows();
+                    row = response.body().getResults().getObject().getRows().get(0);
+                    Gson gson = new Gson();
+                    String sendOject = gson.toJson(row);
                     intent = new Intent(MainActivity.this, SV5TActivity.class);
+                    intent.putExtra("InfoSV5T",sendOject);
                     startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "Đã Xảy Ra Lỗi!!Hãy Thử Lại!!", Toast.LENGTH_SHORT).show();

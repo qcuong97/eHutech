@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.cpd.ehutech.model.Login.Post;
@@ -55,12 +56,14 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     Post post_login = new Post();
     APIService apiService;
-
+    private RelativeLayout relativeLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Anh xa - Login
+        relativeLayout = (RelativeLayout)findViewById(R.id.rela_loading);
+        relativeLayout.setVisibility(View.GONE);
         mMssvView = (EditText) findViewById(R.id.mssv);
         mPasswordView = (EditText) findViewById(R.id.password);
         sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
@@ -77,12 +80,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
     private void attemptLogin() {
         if (mAuthTask != null) {
             return;
         }
-
         // Reset errors.
         mMssvView.setError(null);
         mPasswordView.setError(null);
@@ -145,7 +146,6 @@ public class LoginActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 return false;
             }
-
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mMssv)) {
@@ -162,6 +162,7 @@ public class LoginActivity extends AppCompatActivity {
             String mssv = mMssvView.getText().toString();
 
             if (success) {
+                relativeLayout.setVisibility(View.VISIBLE);
                 doLogin(post_login);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
@@ -183,21 +184,24 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     results = response.body().getResults().getObject().getResults();
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(MSSV,results.getUsername());
+                    editor.putString(MSSV, results.getUsername());
                     editor.putString(Token, results.getToken());
-                    editor.putString(Ten,results.getHoten());
-                    editor.putString(Lop,results.getTenlop());
-                    editor.putString(Khoa,results.getTenkhoa());
+                    editor.putString(Ten, results.getHoten());
+                    editor.putString(Lop, results.getTenlop());
+                    editor.putString(Khoa, results.getTenkhoa());
                     editor.apply();
                     Toast.makeText(LoginActivity.this, "Xin Chao " + results.getHoten() + "", Toast.LENGTH_LONG).show();
                     intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(LoginActivity.this, "Đã Xảy Ra Lỗi!!Hãy Thử Lại!!", Toast.LENGTH_SHORT).show();
+                    relativeLayout.setVisibility(View.GONE);
+                    Toast.makeText(LoginActivity.this, "Sai Mật Khẩu Hoặc Mã Sô Sinh Viên", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onFailure(Call<TrangThai> call, Throwable t) {
+                relativeLayout.setVisibility(View.GONE);
                 Toast.makeText(LoginActivity.this, "Ket Noi Loi", Toast.LENGTH_LONG).show();
             }
         });
