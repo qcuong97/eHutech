@@ -122,10 +122,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_sv5t) {
             doGetInfoTChiSV5T();
         } else if (id == R.id.nav_lhtt) {
-
+            Toast.makeText(MainActivity.this, "Sẽ được cập nhật sau...", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_nckh) {
-
+            Toast.makeText(MainActivity.this, "Sẽ được cập nhật sau...", Toast.LENGTH_SHORT).show();
         } else  if (id == R.id.nav_help) {
+            Toast.makeText(MainActivity.this, "Bấm 'Home' để biết thêm chi tiết", Toast.LENGTH_SHORT).show();
         } else  if (id == R.id.nav_logout){
             onClicked_logout();
         }
