@@ -15,13 +15,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.example.cpd.ehutech.model.SV5T.GetTTinTChiSV5T;
 import com.example.cpd.ehutech.model.SV5T.Row;
 import com.example.cpd.ehutech.remote.ApiUtils;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,15 +40,42 @@ public class MainActivity extends AppCompatActivity
     Intent intent;
     SV5T a = new SV5T();
     Row row = new Row();
+    ViewFlipper viewFlipper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Anhxa();
+        ActionViewFilpper();
+        KiemTraChuKy();
+    }
 
+    private void ActionViewFilpper() {
+        ArrayList<String> mangtintuc = new ArrayList<>();
+        mangtintuc.add("https://www.hutech.edu.vn/img/slider/mhxv2_1000x365-1527662826.png");
+        mangtintuc.add("https://www.hutech.edu.vn/img/slider/cover_doan_1000x365-1523948481.png");
+        mangtintuc.add("https://www.hutech.edu.vn/img/slider/08_998x280_pc-1517879915.png");
+        mangtintuc.add("https://www.hutech.edu.vn/img/slider/09_998x280_pc-1517880235.png");
+        mangtintuc.add("https://www.hutech.edu.vn/img/slider/10_998x280_pc-1517879955.png");
+        mangtintuc.add("https://www.hutech.edu.vn/img/slider/11_998x280_pc-1517879973.png");
+        mangtintuc.add("https://www.hutech.edu.vn/img/slider/12_998x280_pc-1517879993.png");
+        for (int i=0; i< mangtintuc.size();i++)
+        {
+            ImageView imageView = new ImageView(getApplicationContext());
+                    Picasso.with(getApplicationContext()).load(mangtintuc.get(i)).into(imageView);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    viewFlipper.addView(imageView);
+        }
+        viewFlipper.setFlipInterval(6000);
+        viewFlipper.setAutoStart(true);
+        Animation anim_slide_in = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_in_right);
+        Animation anim_slide_out = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_out);
+        viewFlipper.setInAnimation(anim_slide_in);
+        viewFlipper.setOutAnimation(anim_slide_out);
     }
     private void Anhxa(){
         intent = getIntent();
+        viewFlipper = (ViewFlipper)findViewById(R.id.viewFlipper_main);
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
@@ -113,23 +145,30 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(Call<GetTTinTChiSV5T> call, Response<GetTTinTChiSV5T> response) {
                 if (response.isSuccessful()) {
                     row = response.body().getResults().getObject().getRows().get(0);
+                    if(response.body().getCode() == 500) {
+                        Toast.makeText(MainActivity.this, "Đã Xảy Ra Lỗi!!Hãy Thử Đăng Nhập Lại", Toast.LENGTH_SHORT).show();
+                        cancel_sharedPre();
+                    }
                     Gson gson = new Gson();
                     String sendOject = gson.toJson(row);
                     intent = new Intent(MainActivity.this, SV5TActivity.class);
                     intent.putExtra("InfoSV5T",sendOject);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(MainActivity.this, "Đã Xảy Ra Lỗi!!Hãy Thử Lại!!", Toast.LENGTH_SHORT).show();
+                    if(response.body().getCode() == 500) {
+                        Toast.makeText(MainActivity.this, "Đã Xảy Ra Lỗi!!Hãy Thử Đăng Nhập Lại", Toast.LENGTH_SHORT).show();
+                        cancel_sharedPre();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<GetTTinTChiSV5T> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Ket Noi Loi", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Đã Xảy Ra Lỗi!!Hãy Thử Đăng Nhập Lại", Toast.LENGTH_SHORT).show();
+                cancel_sharedPre();
             }
         });
     }
-
     public void onClicked_logout(){
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -159,7 +198,34 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
         finish();
     }
+    void KiemTraChuKy(){
+        a.sharedPreferences = getSharedPreferences(a.MyPREFERENCES, Context.MODE_PRIVATE);
+        String chuky = a.sharedPreferences.getString(a.ChuKy,"");
+        if (chuky == ""){
+            thongbao_chuky();
+        }
+    }
+    void thongbao_chuky(){
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        Intent intent = new Intent(MainActivity.this,DrawSignatureActivity.class);
+                        startActivity(intent);
+                        break;
 
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dialog.cancel();
+                        break;
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Bạn Chưa Có Chữ Ký!");
+        builder.setMessage("Hãy Thêm Chữ Ký").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+    }
     class SV5T extends LoginActivity{
     }
 }

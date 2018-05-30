@@ -1,10 +1,15 @@
 package com.example.cpd.ehutech;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -50,29 +55,22 @@ public class LoginActivity extends AppCompatActivity {
     String Ten = "hoten";
     String Lop = "lop";
     String Khoa = "khoa";
+    String ChuKy = "chuky";
     String username;
     String pass;
     Results_ results;
     SharedPreferences sharedPreferences;
     Post post_login = new Post();
     APIService apiService;
+    Button mLogin;
     private RelativeLayout relativeLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Anh xa - Login
-        relativeLayout = (RelativeLayout)findViewById(R.id.rela_loading);
-        relativeLayout.setVisibility(View.GONE);
-        mMssvView = (EditText) findViewById(R.id.mssv);
-        mPasswordView = (EditText) findViewById(R.id.password);
-        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        if (sharedPreferences.getString(MSSV, "") != "") {
-            intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-        }
-        apiService = ApiUtils.getUserService();
-        Button mLogin = (Button) findViewById(R.id.mssv_login);
+        Anhxa();
+        KiemtraLogin();
         mLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +78,22 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    private void KiemtraLogin() {
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        if (sharedPreferences.getString(MSSV, "") != "") {
+            intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+    }
+    private void Anhxa() {
+        relativeLayout = (RelativeLayout)findViewById(R.id.rela_loading);
+        relativeLayout.setVisibility(View.GONE);
+        mMssvView = (EditText) findViewById(R.id.mssv);
+        mPasswordView = (EditText) findViewById(R.id.password);
+        apiService = ApiUtils.getUserService();
+        mLogin = (Button) findViewById(R.id.mssv_login);
+    }
+
     private void attemptLogin() {
         if (mAuthTask != null) {
             return;
@@ -189,6 +203,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString(Ten, results.getHoten());
                     editor.putString(Lop, results.getTenlop());
                     editor.putString(Khoa, results.getTenkhoa());
+                    editor.putString(ChuKy,results.getChuky());
                     editor.apply();
                     Toast.makeText(LoginActivity.this, "Xin Chao " + results.getHoten() + "", Toast.LENGTH_LONG).show();
                     intent = new Intent(LoginActivity.this, MainActivity.class);
