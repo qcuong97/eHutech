@@ -1,5 +1,6 @@
 package com.example.cpd.ehutech;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -49,8 +50,9 @@ public class LoginActivity extends AppCompatActivity {
     public Intent intent;
     private EditText mMssvView;
     private EditText mPasswordView;
-    String MyPREFERENCES = "MyPrefs";
+    String MyPREFERENCES = "ThongTinSV";
     String MSSV = "mMSSV";
+    String ID = "mID";
     String Token = "token";
     String Ten = "hoten";
     String Lop = "lop";
@@ -80,18 +82,18 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void KiemtraLogin() {
         sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        if (sharedPreferences.getString(MSSV, "") != "") {
+        if (!sharedPreferences.getString(MSSV, "").equals("")) {
             intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }
     }
     private void Anhxa() {
-        relativeLayout = (RelativeLayout)findViewById(R.id.rela_loading);
+        relativeLayout = findViewById(R.id.rela_loading);
         relativeLayout.setVisibility(View.GONE);
-        mMssvView = (EditText) findViewById(R.id.mssv);
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mMssvView = findViewById(R.id.mssv);
+        mPasswordView = findViewById(R.id.password);
         apiService = ApiUtils.getUserService();
-        mLogin = (Button) findViewById(R.id.mssv_login);
+        mLogin = findViewById(R.id.mssv_login);
     }
 
     private void attemptLogin() {
@@ -141,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
+    @SuppressLint("StaticFieldLeak")
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mMssv;
@@ -204,6 +207,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString(Lop, results.getTenlop());
                     editor.putString(Khoa, results.getTenkhoa());
                     editor.putString(ChuKy,results.getChuky());
+                    editor.putString(ID,results.getId());
                     editor.apply();
                     Toast.makeText(LoginActivity.this, "Xin Chao " + results.getHoten() + "", Toast.LENGTH_LONG).show();
                     intent = new Intent(LoginActivity.this, MainActivity.class);
