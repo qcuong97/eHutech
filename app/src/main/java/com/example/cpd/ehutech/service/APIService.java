@@ -2,7 +2,8 @@ package com.example.cpd.ehutech.service;
 
 import com.example.cpd.ehutech.model.Login.Post;
 import com.example.cpd.ehutech.model.Login.TrangThai;
-import com.example.cpd.ehutech.model.SV5T.GetTTinTChiSV5T;
+import com.example.cpd.ehutech.model.SV5T.Row;
+import com.example.cpd.ehutech.model.SV5T.TTinTChiSV5T;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -16,5 +17,8 @@ public interface APIService {
     Call<TrangThai> login_mssv(@Body Post post);
 
     @GET("sinhvien_5t/mssv/{mssv}?fields=[\"$all\"]")
-    Call<GetTTinTChiSV5T> getTTinTChiSV5T(@Path("mssv") String mssv, @Header("Authorization") String token);
+    Call<TTinTChiSV5T> getTTinTChiSV5T(@Path("mssv") String mssv, @Header("Authorization") String token);
+
+    @POST("sinhvien_5t")
+    Call<TTinTChiSV5T> dkyTTinTChiSV5T(@Header("Authorization") String token, @Body Row row);
 }

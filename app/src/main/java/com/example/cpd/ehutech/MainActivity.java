@@ -24,14 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.example.cpd.ehutech.model.SV5T.GetTTinTChiSV5T;
+import com.example.cpd.ehutech.model.SV5T.TTinTChiSV5T;
 import com.example.cpd.ehutech.model.SV5T.Row;
 import com.example.cpd.ehutech.remote.ApiUtils;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -65,9 +64,9 @@ public class MainActivity extends AppCompatActivity
         for (int i=0; i< mangtintuc.size();i++)
         {
             ImageView imageView = new ImageView(getApplicationContext());
-                    Picasso.with(getApplicationContext()).load(mangtintuc.get(i)).into(imageView);
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                    viewFlipper.addView(imageView);
+            Picasso.with(getApplicationContext()).load(mangtintuc.get(i)).into(imageView);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            viewFlipper.addView(imageView);
         }
         viewFlipper.setFlipInterval(6000);
         viewFlipper.setAutoStart(true);
@@ -143,10 +142,10 @@ public class MainActivity extends AppCompatActivity
         String token = "Bearer " + a.sharedPreferences.getString(a.Token, "");
         String mssv = a.sharedPreferences.getString(a.MSSV, "");
         a.apiService = ApiUtils.getUserService();
-        Call<GetTTinTChiSV5T> call = a.apiService.getTTinTChiSV5T(mssv, token);
-        call.enqueue(new Callback<GetTTinTChiSV5T>() {
+        Call<TTinTChiSV5T> call = a.apiService.getTTinTChiSV5T(mssv, token);
+        call.enqueue(new Callback<TTinTChiSV5T>() {
             @Override
-            public void onResponse(Call<GetTTinTChiSV5T> call, Response<GetTTinTChiSV5T> response) {
+            public void onResponse(Call<TTinTChiSV5T> call, Response<TTinTChiSV5T> response) {
                 if (response.isSuccessful()) {
                     if( response.body().getResults().getObject().getCount() == 0)
                     {
@@ -173,7 +172,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<GetTTinTChiSV5T> call, Throwable t) {
+            public void onFailure(Call<TTinTChiSV5T> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Đã Xảy Ra Lỗi!!Hãy Thử Đăng Nhập Lại", Toast.LENGTH_SHORT).show();
                 cancel_sharedPre();
             }
@@ -232,8 +231,8 @@ public class MainActivity extends AppCompatActivity
     }
     void KiemTraChuKy(){
         a.sharedPreferences = getSharedPreferences(a.MyPREFERENCES, Context.MODE_PRIVATE);
-        String chuky = a.sharedPreferences.getString(a.ChuKy,"");
-        if (chuky.equals("")){
+        String chuky = a.sharedPreferences.getString(a.ChuKy, null);
+        if (chuky == null){
             thongbao_chuky();
         }
     }

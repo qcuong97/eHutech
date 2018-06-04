@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -58,6 +59,8 @@ public class LoginActivity extends AppCompatActivity {
     String Lop = "lop";
     String Khoa = "khoa";
     String ChuKy = "chuky";
+    String Email = "email";
+    String SDT = "sdt";
     String username;
     String pass;
     Results_ results;
@@ -208,6 +211,8 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString(Khoa, results.getTenkhoa());
                     editor.putString(ChuKy,results.getChuky());
                     editor.putString(ID,results.getId());
+                    editor.putString(Email, results.getEmail());
+                    editor.putString(SDT, results.getSdt());
                     editor.apply();
                     Toast.makeText(LoginActivity.this, "Xin Chao " + results.getHoten() + "", Toast.LENGTH_LONG).show();
                     intent = new Intent(LoginActivity.this, MainActivity.class);

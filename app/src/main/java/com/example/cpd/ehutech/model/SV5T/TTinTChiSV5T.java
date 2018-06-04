@@ -3,7 +3,7 @@ package com.example.cpd.ehutech.model.SV5T;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GetTTinTChiSV5T {
+public class TTinTChiSV5T {
     @SerializedName("code")
     @Expose
     private Integer code;

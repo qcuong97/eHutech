@@ -26,9 +26,120 @@ public class SV5TActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sv5t_main);
-        getInfoSV5T();
         Anhxa();
+        lockChange();
+        getInfoSV5T();
         getData();
+    }
+
+    public void Anhxa()
+    {
+        {
+            txt_TCDD = findViewById(R.id.TCDD);
+            txt_TCHT = findViewById(R.id.TCHT);
+            txt_TCTL = findViewById(R.id.TCTL);
+            txt_TCTN = findViewById(R.id.TCTN);
+            txt_TCHN = findViewById(R.id.TCHN);
+            txt_TCUT = findViewById(R.id.TCUT);
+            edt_drlhk1 = findViewById(R.id.edt_rl_drlhk1);
+            edt_drlhk2 = findViewById(R.id.edt_rl_drlhk2);
+            edt_dhthk1 = findViewById(R.id.edt_ht_dhthk1);
+            edt_dhthk2 = findViewById(R.id.edt_ht_dhthk2);
+            edt_dhttb = findViewById(R.id.edt_ht_dhttb);
+            cb_rl_cluongDV = findViewById(R.id.cb_rl_cluongDV);
+            cb_rl_tnttltlBac = findViewById(R.id.cb_rl_tnttltlBac);
+            cb_rl_hthiTTHCM = findViewById(R.id.cb_rl_hthiTTHCM);
+            cb_ht_thdtNCKH = findViewById(R.id.cb_ht_thdtNCKH);
+            cb_ht_bvNCKH = findViewById(R.id.cb_ht_bvNCKH);
+            cb_ht_dgCTHT = findViewById(R.id.cb_ht_dgCTHT);
+            cb_tl_sbKhoe = findViewById(R.id.cb_tl_sbKhoe);
+            cb_tl_tvDTuyenTDTT = findViewById(R.id.cb_tl_tvDTuyenTDTT);
+            cb_tl_giaiHThao = findViewById(R.id.cb_tl_giaiHThao);
+            cb_tn_MXHXTN = findViewById(R.id.cb_tn_MXHXTN);
+            cb_tn_5hoatdong = findViewById(R.id.cb_tn_5hoatdong);
+            cb_hn_AVanB1 = findViewById(R.id.cb_hn_AVanB1);
+            cb_hn_GluuQuocTe = findViewById(R.id.cb_hn_GluuQuocTe);
+            cb_hn_GiaiNgoaiNgu = findViewById(R.id.cb_hn_GiaiNgoaiNgu);
+            cb_hn_1KhoahocKyNang = findViewById(R.id.cb_hn_1KhoahocKyNang);
+            cb_hn_3HoiThaoKiNang = findViewById(R.id.cb_hn_3HoiThaoKiNang);
+            cb_hn_hoatdongHN = findViewById(R.id.cb_hn_hoatdongHN);
+            cb_ut_utuDang = findViewById(R.id.cb_ut_utuDang);
+            cb_ut_hienmau = findViewById(R.id.cb_ut_hienmau);
+            cb_ut_khenthuong = findViewById(R.id.cb_ut_khenthuong);
+        }
+
+    }
+
+    private void lockEditText(EditText a)
+    {
+        a.setClickable(false);
+        a.setCursorVisible(false);
+        a.setFocusable(false);
+        a.setFocusableInTouchMode(false);
+    }
+
+    private void unlockEditText(EditText a)
+    {
+        a.setClickable(true);
+        a.setCursorVisible(true);
+        a.setFocusable(true);
+        a.setFocusableInTouchMode(true);
+    }
+
+    private void lockChange() {
+        lockEditText(edt_drlhk1);
+        lockEditText(edt_drlhk2);
+        lockEditText(edt_dhthk1);
+        lockEditText(edt_dhthk2);
+        lockEditText(edt_dhttb);
+        cb_rl_tnttltlBac.setClickable(false);
+        cb_rl_hthiTTHCM.setClickable(false);
+        cb_rl_cluongDV.setClickable(false);
+        cb_ht_thdtNCKH.setClickable(false);
+        cb_ht_dgCTHT.setClickable(false);
+        cb_ht_bvNCKH.setClickable(false);
+        cb_tl_tvDTuyenTDTT.setClickable(false);
+        cb_tl_sbKhoe.setClickable(false);
+        cb_tl_giaiHThao.setClickable(false);
+        cb_tn_MXHXTN.setClickable(false);
+        cb_tn_5hoatdong.setClickable(false);
+        cb_hn_hoatdongHN.setClickable(false);
+        cb_hn_GluuQuocTe.setClickable(false);
+        cb_hn_AVanB1.setClickable(false);
+        cb_hn_3HoiThaoKiNang.setClickable(false);
+        cb_hn_1KhoahocKyNang.setClickable(false);
+        cb_hn_GiaiNgoaiNgu.setClickable(false);
+        cb_ut_utuDang.setClickable(false);
+        cb_ut_khenthuong.setClickable(false);
+        cb_ut_hienmau.setClickable(false);
+    }
+
+    private void unlockChange() {
+        unlockEditText(edt_drlhk1);
+        unlockEditText(edt_drlhk2);
+        unlockEditText(edt_dhthk1);
+        unlockEditText(edt_dhthk2);
+        unlockEditText(edt_dhttb);
+        cb_rl_tnttltlBac.setClickable(true);
+        cb_rl_hthiTTHCM.setClickable(true);
+        cb_rl_cluongDV.setClickable(true);
+        cb_ht_thdtNCKH.setClickable(true);
+        cb_ht_dgCTHT.setClickable(true);
+        cb_ht_bvNCKH.setClickable(true);
+        cb_tl_tvDTuyenTDTT.setClickable(true);
+        cb_tl_sbKhoe.setClickable(true);
+        cb_tl_giaiHThao.setClickable(true);
+        cb_tn_MXHXTN.setClickable(true);
+        cb_tn_5hoatdong.setClickable(true);
+        cb_hn_hoatdongHN.setClickable(true);
+        cb_hn_GluuQuocTe.setClickable(true);
+        cb_hn_AVanB1.setClickable(true);
+        cb_hn_3HoiThaoKiNang.setClickable(true);
+        cb_hn_1KhoahocKyNang.setClickable(true);
+        cb_hn_GiaiNgoaiNgu.setClickable(true);
+        cb_ut_utuDang.setClickable(true);
+        cb_ut_khenthuong.setClickable(true);
+        cb_ut_hienmau.setClickable(true);
     }
 
     private void getData() {
@@ -59,41 +170,6 @@ public class SV5TActivity extends AppCompatActivity {
         cb_ut_utuDang.setChecked(row.getUutien_duocketnapdang());
     }
 
-    public void Anhxa()
-    {
-        txt_TCDD = (TextView) findViewById(R.id.TCDD);
-        txt_TCHT = (TextView) findViewById(R.id.TCHT);
-        txt_TCTL = (TextView) findViewById(R.id.TCTL);
-        txt_TCTN = (TextView) findViewById(R.id.TCTN);
-        txt_TCHN = (TextView) findViewById(R.id.TCHN);
-        txt_TCUT = (TextView) findViewById(R.id.TCUT);
-        edt_drlhk1 = (EditText) findViewById(R.id.edt_rl_drlhk1);
-        edt_drlhk2 = (EditText) findViewById(R.id.edt_rl_drlhk2);
-        edt_dhthk1 = (EditText) findViewById(R.id.edt_ht_dhthk1);
-        edt_dhthk2 = (EditText) findViewById(R.id.edt_ht_dhthk2);
-        edt_dhttb = (EditText) findViewById(R.id.edt_ht_dhttb);
-        cb_rl_cluongDV = (CheckBox) findViewById(R.id.cb_rl_cluongDV);
-        cb_rl_tnttltlBac = (CheckBox) findViewById(R.id.cb_rl_tnttltlBac);
-        cb_rl_hthiTTHCM = (CheckBox) findViewById(R.id.cb_rl_hthiTTHCM);
-        cb_ht_thdtNCKH = (CheckBox) findViewById(R.id.cb_ht_thdtNCKH);
-        cb_ht_bvNCKH = (CheckBox) findViewById(R.id.cb_ht_bvNCKH);
-        cb_ht_dgCTHT = (CheckBox) findViewById(R.id.cb_ht_dgCTHT);
-        cb_tl_sbKhoe = (CheckBox) findViewById(R.id.cb_tl_sbKhoe);
-        cb_tl_tvDTuyenTDTT = (CheckBox) findViewById(R.id.cb_tl_tvDTuyenTDTT);
-        cb_tl_giaiHThao = (CheckBox) findViewById(R.id.cb_tl_giaiHThao);
-        cb_tn_MXHXTN = (CheckBox) findViewById(R.id.cb_tn_MXHXTN);
-        cb_tn_5hoatdong = (CheckBox) findViewById(R.id.cb_tn_5hoatdong);
-        cb_hn_AVanB1 = (CheckBox) findViewById(R.id.cb_hn_AVanB1);
-        cb_hn_GluuQuocTe = (CheckBox) findViewById(R.id.cb_hn_GluuQuocTe);
-        cb_hn_GiaiNgoaiNgu = (CheckBox) findViewById(R.id.cb_hn_GiaiNgoaiNgu);
-        cb_hn_1KhoahocKyNang = (CheckBox) findViewById(R.id.cb_hn_1KhoahocKyNang);
-        cb_hn_3HoiThaoKiNang = (CheckBox) findViewById(R.id.cb_hn_3HoiThaoKiNang);
-        cb_hn_hoatdongHN = (CheckBox) findViewById(R.id.cb_hn_hoatdongHN);
-        cb_ut_utuDang = (CheckBox) findViewById(R.id.cb_ut_utuDang);
-        cb_ut_hienmau = (CheckBox) findViewById(R.id.cb_ut_hienmau);
-        cb_ut_khenthuong = (CheckBox) findViewById(R.id.cb_ut_khenthuong);
-    }
-
     public void txt_TCDD_Action(View v)
     {
         LinearLayout layout_TCDD = findViewById(R.id.TTin_TCDD);
@@ -113,7 +189,7 @@ public class SV5TActivity extends AppCompatActivity {
             layout_TCHT.setVisibility(View.VISIBLE);
         }else {
             layout_TCHT.setVisibility(View.GONE);
-        };
+        }
     }
 
     public void txt_TCTL_Action(View v)
