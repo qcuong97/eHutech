@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,11 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorToolbar"
-        android:clickable="true"
-        android:onClick="txt_DKySV5T_Action"
         app:popupTheme="@style/AppTheme.PopupOverlay"
         app:title="Tiêu Chí"
-        app:titleTextColor="@color/colorTextToolbar" />
+        app:titleTextColor="@color/colorTextToolbar"
+        android:focusable="true" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -24,19 +24,59 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Danh Hiệu:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingStart="5dp"
+                android:textColor="#076EF1"
+                tools:ignore="RtlSymmetry" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+                <RadioButton
+                    android:id="@+id/cap_khoa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Khoa"
+                    android:checked="true"
+                    android:layout_weight="1"/>
+                <RadioButton
+                    android:id="@+id/cap_truong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trường"
+                    android:layout_weight="1"/>
+                <RadioButton
+                    android:id="@+id/cap_thanh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thành Phố"
+                    android:layout_weight="1"/>
+                <RadioButton
+                    android:id="@+id/cap_TW"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trung Ướng"
+                    android:layout_weight="1"/>
+            </RadioGroup>
             <TextView
                 android:id="@+id/TCDD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:drawableLeft="@drawable/sv5t_tcht"
+                android:drawableStart="@drawable/sv5t_tcht"
                 android:drawablePadding="5dp"
                 android:onClick="txt_TCDD_Action"
-                android:paddingLeft="5dp"
-                android:text="ĐẠO ĐỨC"
+                android:paddingStart="5dp"
+                android:text="@string/dao_duc"
                 android:textColor="#076EF1"
-                android:textSize="22sp" />
+                android:textSize="22sp"
+                android:focusable="true"
+                tools:ignore="RtlSymmetry" />
             <LinearLayout
                 android:id="@+id/TTin_TCDD"
                 android:layout_width="match_parent"

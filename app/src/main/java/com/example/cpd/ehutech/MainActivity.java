@@ -49,7 +49,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Anhxa();
         ActionViewFilpper();
-        KiemTraChuKy();
+        if(!KiemTraChuKy()){
+            thongbao_chuky();
+        }
     }
 
     private void ActionViewFilpper() {
@@ -97,8 +99,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,DrawSignatureActivity.class);
-                startActivity(intent);
+                Toast.makeText(MainActivity.this, R.string.comming_soon,Toast.LENGTH_LONG).show();
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -124,11 +125,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_sv5t) {
             doGetInfoTChiSV5T();
         } else if (id == R.id.nav_lhtt) {
-            Toast.makeText(MainActivity.this, "Sẽ được cập nhật sau...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.comming_soon, Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_nckh) {
-            Toast.makeText(MainActivity.this, "Sẽ được cập nhật sau...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.comming_soon, Toast.LENGTH_SHORT).show();
         } else  if (id == R.id.nav_help) {
-            Toast.makeText(MainActivity.this, "Bấm 'Home' để biết thêm chi tiết", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.comming_soon, Toast.LENGTH_SHORT).show();
         } else  if (id == R.id.nav_logout){
             onClicked_logout();
         }
@@ -185,8 +186,12 @@ public class MainActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
-                        intent = new Intent(MainActivity.this,DangKySV5TActivity.class);
-                        startActivity(intent);
+                        if(KiemTraChuKy()){
+                            intent = new Intent(MainActivity.this,DangKySV5TActivity.class);
+                            startActivity(intent);
+                        }
+                        else
+                            thongbao_chuky();
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -229,12 +234,13 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
         finish();
     }
-    void KiemTraChuKy(){
+    Boolean KiemTraChuKy(){
         a.sharedPreferences = getSharedPreferences(a.MyPREFERENCES, Context.MODE_PRIVATE);
         String chuky = a.sharedPreferences.getString(a.ChuKy, null);
-        if (chuky == null){
-            thongbao_chuky();
+        if (chuky != null){
+           return true;
         }
+        return false;
     }
     void thongbao_chuky(){
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {

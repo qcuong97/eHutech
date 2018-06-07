@@ -6,7 +6,10 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.example.cpd.ehutech.model.SV5T.Row;
 import com.google.gson.Gson;
@@ -20,7 +23,7 @@ public class SV5TActivity extends AppCompatActivity {
             cb_tl_sbKhoe, cb_tl_tvDTuyenTDTT, cb_tl_giaiHThao, cb_tn_MXHXTN, cb_tn_5hoatdong,
             cb_hn_AVanB1, cb_hn_GluuQuocTe, cb_hn_GiaiNgoaiNgu, cb_hn_1KhoahocKyNang,
             cb_hn_3HoiThaoKiNang, cb_hn_hoatdongHN, cb_ut_utuDang, cb_ut_hienmau, cb_ut_khenthuong;
-
+    RadioButton radi_khoa,radi_truong,radi_thanh,radi_tw;
     Row row = new Row();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,10 @@ public class SV5TActivity extends AppCompatActivity {
     public void Anhxa()
     {
         {
+            radi_khoa = findViewById(R.id.cap_khoa);
+            radi_truong = findViewById(R.id.cap_truong);
+            radi_thanh = findViewById(R.id.cap_thanh);
+            radi_tw = findViewById(R.id.cap_TW);
             txt_TCDD = findViewById(R.id.TCDD);
             txt_TCHT = findViewById(R.id.TCHT);
             txt_TCTL = findViewById(R.id.TCTL);
@@ -87,6 +94,10 @@ public class SV5TActivity extends AppCompatActivity {
     }
 
     private void lockChange() {
+        radi_khoa.setClickable(false);
+        radi_thanh.setClickable(false);
+        radi_truong.setClickable(false);
+        radi_tw.setClickable(false);
         lockEditText(edt_drlhk1);
         lockEditText(edt_drlhk2);
         lockEditText(edt_dhthk1);
@@ -115,6 +126,10 @@ public class SV5TActivity extends AppCompatActivity {
     }
 
     private void unlockChange() {
+        radi_khoa.setClickable(true);
+        radi_thanh.setClickable(true);
+        radi_truong.setClickable(true);
+        radi_tw.setClickable(true);
         unlockEditText(edt_drlhk1);
         unlockEditText(edt_drlhk2);
         unlockEditText(edt_dhthk1);
@@ -143,6 +158,18 @@ public class SV5TActivity extends AppCompatActivity {
     }
 
     private void getData() {
+        if(row.getDanhhieu().equals("Khoa")){
+            radi_khoa.setChecked(true);
+        }
+        if(row.getDanhhieu().equals("Trường")){
+            radi_truong.setChecked(true);
+        }
+        if(row.getDanhhieu().equals("Thành")){
+            radi_thanh.setChecked(true);
+        }
+        if(row.getDanhhieu().equals("Trung Ương")){
+            radi_tw.setChecked(true);
+        }
         edt_drlhk1.setText(row.getDd_drlhk1().toString());
         edt_drlhk2.setText(row.getDd_drlhk2().toString());
         edt_dhthk1.setText(row.getHt_diemhk1().toString());

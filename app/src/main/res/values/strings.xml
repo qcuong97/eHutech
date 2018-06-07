@@ -31,4 +31,6 @@
     <string name="TCUT"> Ưu tiên</string>
     <string name="loading">Đang Kết Nối....</string>
     <string name="tintuc">Tin Tức Mới Nhất</string>
+    <string name="comming_soon">Hiện Đang Phát Triển!!</string>
+    <string name="dao_duc">ĐẠO ĐỨC</string>
 </resources>

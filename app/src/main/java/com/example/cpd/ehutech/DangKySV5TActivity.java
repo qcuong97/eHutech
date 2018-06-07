@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ public class DangKySV5TActivity extends AppCompatActivity {
             cb_hn_AVanB1, cb_hn_GluuQuocTe, cb_hn_GiaiNgoaiNgu, cb_hn_1KhoahocKyNang,
             cb_hn_3HoiThaoKiNang, cb_hn_hoatdongHN, cb_ut_utuDang, cb_ut_hienmau, cb_ut_khenthuong;
     Button btn_dky, btn_huy;
+    RadioButton radi_khoa,radi_truong,radi_thanh,radi_tw;
     Row row = new Row();
     Intent intent;
     dkySV5T a = new dkySV5T();
@@ -47,7 +50,6 @@ public class DangKySV5TActivity extends AppCompatActivity {
         btn_dky.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                kiemtraChuky();
                 setData();
                 doDKySV5T(row);
             }
@@ -60,34 +62,6 @@ public class DangKySV5TActivity extends AppCompatActivity {
             }
         });
     }
-
-    void kiemtraChuky(){
-        a.sharedPreferences = getSharedPreferences(a.MyPREFERENCES, Context.MODE_PRIVATE);
-        String chuky = a.sharedPreferences.getString(a.ChuKy, null);
-        if(chuky == null)
-        {
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which){
-                        case DialogInterface.BUTTON_POSITIVE:
-                            Intent intent = new Intent(DangKySV5TActivity.this,DrawSignatureActivity.class);
-                            startActivity(intent);
-                            break;
-
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            dialog.cancel();
-                            break;
-                    }
-                }
-            };
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Bạn Chưa Có Chữ Ký!");
-            builder.setMessage("Hãy Thêm Chữ Ký").setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener).show();
-        }
-    }
-
     public void doDKySV5T(Row row) {
         a.sharedPreferences = getSharedPreferences(a.MyPREFERENCES, Context.MODE_PRIVATE);
         String token = "Bearer " + a.sharedPreferences.getString(a.Token, "");
@@ -122,6 +96,19 @@ public class DangKySV5TActivity extends AppCompatActivity {
         String sdt = a.sharedPreferences.getString(a.SDT, "");
         String lop = a.sharedPreferences.getString(a.Lop, "");
         String khoa = a.sharedPreferences.getString(a.Khoa, "");
+
+        if(radi_khoa.isChecked()){
+            row.setDanhhieu("Khoa");
+        }
+        if(radi_truong.isChecked()){
+            row.setDanhhieu("Trường");
+        }
+        if(radi_thanh.isChecked()){
+            row.setDanhhieu("Thành");
+        }
+        if(radi_tw.isChecked()){
+            row.setDanhhieu("Trung Ương");
+        }
 
         row.setUsername(username);
         row.setChuky(chuky);
@@ -227,6 +214,10 @@ public class DangKySV5TActivity extends AppCompatActivity {
 
     private void Anhxa()
     {
+        radi_khoa = findViewById(R.id.cap_khoa);
+        radi_truong = findViewById(R.id.cap_truong);
+        radi_thanh = findViewById(R.id.cap_thanh);
+        radi_tw = findViewById(R.id.cap_TW);
         txt_TCDD = findViewById(R.id.TCDD);
         txt_TCHT = findViewById(R.id.TCHT);
         txt_TCTL = findViewById(R.id.TCTL);

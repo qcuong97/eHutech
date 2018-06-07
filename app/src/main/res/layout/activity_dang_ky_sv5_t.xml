@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -25,7 +26,45 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Danh Hiệu:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingStart="5dp"
+                android:textColor="#076EF1"
+                tools:ignore="RtlSymmetry" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+                <RadioButton
+                    android:id="@+id/cap_khoa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Khoa"
+                    android:checked="true"
+                    android:layout_weight="1"/>
+                <RadioButton
+                    android:id="@+id/cap_truong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trường"
+                    android:layout_weight="1"/>
+                <RadioButton
+                    android:id="@+id/cap_thanh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thành Phố"
+                    android:layout_weight="1"/>
+                <RadioButton
+                    android:id="@+id/cap_TW"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trung Ướng"
+                    android:layout_weight="1"/>
+            </RadioGroup>
             <TextView
                 android:id="@+id/TCDD"
                 android:layout_width="match_parent"
@@ -45,7 +84,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="10dp">
+                android:paddingStart="10dp"
+                tools:ignore="RtlSymmetry">
 
                 <TextView
                     android:id="@+id/txt_rl_drl"
@@ -63,7 +103,7 @@
                         android:id="@+id/txt_rl_drlhk1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
+                        android:paddingStart="10dp"
                         android:text="Học Kì 1: "
                         android:textSize="15sp" />
 
@@ -71,7 +111,7 @@
                         android:id="@+id/edt_rl_drlhk1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:inputType="number"
                         android:minWidth="30dp"
                         android:textSize="15sp" />
@@ -86,7 +126,7 @@
                         android:id="@+id/txt_rl_drlhk2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
+                        android:paddingStart="10dp"
                         android:text="Học Kì 2: "
                         android:textSize="15sp" />
 
@@ -94,7 +134,7 @@
                         android:id="@+id/edt_rl_drlhk2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:inputType="number"
                         android:minWidth="30dp"
                         android:textSize="15sp" />
