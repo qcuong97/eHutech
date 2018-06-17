@@ -203,8 +203,8 @@ public class DangKySV5TActivity extends AppCompatActivity {
 
     float KiemTraDHT(float a)
     {
-        if(a >= 10){
-            a = 10;
+        if(a >= 4){
+            a = 4;
         }
         if(a <= 0){
             a = 0;

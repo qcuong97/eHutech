@@ -458,6 +458,35 @@
                     android:text="Được biểu dương, khen thưởng." />
             </LinearLayout>
 
+            <Button
+                android:layout_gravity="center"
+                android:id="@+id/btnChinhSua"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chỉnh sửa" />
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/dang_sua"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_weight="1"
+                    android:text="Lưu"
+                    android:id="@+id/btnLuu_ChinhSua"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:layout_weight="1"
+                    android:text="Hủy"
+                    android:id="@+id/btnHuy_ChinhSua"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>

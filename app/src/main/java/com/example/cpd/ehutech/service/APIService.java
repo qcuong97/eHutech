@@ -27,6 +27,9 @@ public interface APIService {
     @POST("sinhvien_5t")
     Call<TTinTChiSV5T> dkyTTinTChiSV5T(@Header("Authorization") String token, @Body Row row);
 
+    @PUT("sinhvien_5t/editsinhvien5t/{id}")
+    Call<TTinTChiSV5T> suaTTinTChiSV5T(@Path("id") String id, @Header("Authorization") String token, @Body Row row);
+
     @Multipart
     @PUT("sinhvien/chuky/{id}")
     Call<UploadChuKy> upload_chuky(@Path("id") String id,@Header("Authorization") String token,@Part MultipartBody.Part file);

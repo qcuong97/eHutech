@@ -1,18 +1,29 @@
 package com.example.cpd.ehutech;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.cpd.ehutech.model.SV5T.Row;
+import com.example.cpd.ehutech.model.SV5T.TTinTChiSV5T;
+import com.example.cpd.ehutech.remote.ApiUtils;
 import com.google.gson.Gson;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class SV5TActivity extends AppCompatActivity {
@@ -24,7 +35,11 @@ public class SV5TActivity extends AppCompatActivity {
             cb_hn_AVanB1, cb_hn_GluuQuocTe, cb_hn_GiaiNgoaiNgu, cb_hn_1KhoahocKyNang,
             cb_hn_3HoiThaoKiNang, cb_hn_hoatdongHN, cb_ut_utuDang, cb_ut_hienmau, cb_ut_khenthuong;
     RadioButton radi_khoa,radi_truong,radi_thanh,radi_tw;
+    Button btnChinhSua, btnLuu, btnHuy;
     Row row = new Row();
+    dkySV5T a = new dkySV5T();
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +48,30 @@ public class SV5TActivity extends AppCompatActivity {
         lockChange();
         getInfoSV5T();
         getData();
+        btnChinhSua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                unlockChange();
+                LinearLayout layoutSua = findViewById(R.id.dang_sua);
+                layoutSua.setVisibility(View.VISIBLE);
+                btnChinhSua.setVisibility(View.GONE);
+            }
+        });
+        btnLuu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setData();
+                doSuaSV5T(row);
+            }
+        });
+        btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
     }
 
     public void Anhxa()
@@ -73,6 +112,9 @@ public class SV5TActivity extends AppCompatActivity {
             cb_ut_utuDang = findViewById(R.id.cb_ut_utuDang);
             cb_ut_hienmau = findViewById(R.id.cb_ut_hienmau);
             cb_ut_khenthuong = findViewById(R.id.cb_ut_khenthuong);
+            btnChinhSua = findViewById(R.id.btnChinhSua);
+            btnLuu = findViewById(R.id.btnLuu_ChinhSua);
+            btnHuy = findViewById(R.id.btnHuy_ChinhSua);
         }
 
     }
@@ -197,6 +239,156 @@ public class SV5TActivity extends AppCompatActivity {
         cb_ut_utuDang.setChecked(row.getUutien_duocketnapdang());
     }
 
+    //gán dliệu từ màn hình về sql
+    private Row setData() {
+        a.sharedPreferences = getSharedPreferences(a.MyPREFERENCES, Context.MODE_PRIVATE);
+        String chuky = a.sharedPreferences.getString(a.ChuKy, null);
+        String username = a.sharedPreferences.getString(a.MSSV, "");
+        String hoten = a.sharedPreferences.getString(a.Ten, "");
+        String email = a.sharedPreferences.getString(a.Email, "");
+        String sdt = a.sharedPreferences.getString(a.SDT, "");
+        String lop = a.sharedPreferences.getString(a.Lop, "");
+        String khoa = a.sharedPreferences.getString(a.Khoa, "");
+
+        if(radi_khoa.isChecked()){
+            row.setDanhhieu("Khoa");
+        }
+        if(radi_truong.isChecked()){
+            row.setDanhhieu("Trường");
+        }
+        if(radi_thanh.isChecked()){
+            row.setDanhhieu("Thành");
+        }
+        if(radi_tw.isChecked()){
+            row.setDanhhieu("Trung Ương");
+        }
+
+        row.setUsername(username);
+        row.setChuky(chuky);
+        row.setHoten(hoten);
+        row.setEmail(email);
+        row.setSdt(sdt);
+        row.setTenlop(lop);
+        row.setTenkhoa(khoa);
+
+        int drlhk1, drlhk2;
+        float dhthk1, dhthk2, dhttb;
+        int defaultt = 0;
+
+        if (edt_drlhk1.getText().toString().trim().equals(""))
+        {
+            edt_drlhk1.setText(Integer.toString(defaultt));
+            drlhk1 = KiemTraDRL(Integer.parseInt(edt_drlhk1.getText().toString()));
+        }else {
+            drlhk1 = KiemTraDRL(Integer.parseInt(edt_drlhk1.getText().toString()));
+        }
+        if (edt_drlhk2.getText().toString().trim().equals(""))
+        {
+            edt_drlhk2.setText(Integer.toString(defaultt));
+            drlhk2 = KiemTraDRL(Integer.parseInt(edt_drlhk2.getText().toString()));
+        }else {
+            drlhk2 = KiemTraDRL(Integer.parseInt(edt_drlhk2.getText().toString()));
+        }
+        if (edt_dhthk1.getText().toString().trim().equals(""))
+        {
+            edt_dhthk1.setText(Float.toString(defaultt));
+            dhthk1 = KiemTraDHT(Float.parseFloat(edt_dhthk1.getText().toString()));
+        }else {
+            dhthk1 = KiemTraDHT(Float.parseFloat(edt_dhthk1.getText().toString()));
+        }
+        if (edt_dhthk2.getText().toString().trim().equals(""))
+        {
+            edt_dhthk2.setText(Float.toString(defaultt));
+            dhthk2 = KiemTraDHT(Float.parseFloat(edt_dhthk2.getText().toString()));
+        }else {
+            dhthk2 = KiemTraDHT(Float.parseFloat(edt_dhthk2.getText().toString()));
+        }
+        if (edt_dhttb.getText().toString().trim().equals(""))
+        {
+            edt_dhttb.setText(Float.toString((dhthk1+ dhthk2) /2));
+            dhttb = KiemTraDHT(Float.parseFloat(edt_dhttb.getText().toString()));
+        }else {
+            dhttb = KiemTraDHT(Float.parseFloat(edt_dhttb.getText().toString()));
+        }
+
+        row.setDd_drlhk1(drlhk1);
+        row.setDd_drlhk2(drlhk2);
+        row.setHt_diemhk1(dhthk1);
+        row.setHt_diemhk2(dhthk2);
+        row.setHt_diemtbn(dhttb);
+        row.setDd_hoithitutuonghcm(cb_rl_hthiTTHCM.isChecked());
+        row.setDd_loaidoanvien(cb_rl_cluongDV.isChecked());
+        row.setDd_thanhnientientien(cb_rl_tnttltlBac.isChecked());
+        row.setHt_baivietnckh(cb_ht_bvNCKH.isChecked());
+        row.setHt_giaithuongnckh(cb_ht_dgCTHT.isChecked());
+        row.setHt_thuchiennckh(cb_ht_thdtNCKH.isChecked());
+        row.setTl_doituyentdtt(cb_tl_tvDTuyenTDTT.isChecked());
+        row.setTl_giaithuongthethao(cb_tl_giaiHThao.isChecked());
+        row.setTl_sinhvienkhoe(cb_tl_sbKhoe.isChecked());
+        row.setTn_5tn_nam(cb_tn_5hoatdong.isChecked());
+        row.setTn_mhx_xtn(cb_tn_MXHXTN.isChecked());
+        row.setHnhap_1khoakynang(cb_hn_1KhoahocKyNang.isChecked());
+        row.setHnhap_3hoithaokynang(cb_hn_3HoiThaoKiNang.isChecked());
+        row.setHnhap_avanB1(cb_hn_AVanB1.isChecked());
+        row.setHnhap_giaithuongthingoaingu(cb_hn_GiaiNgoaiNgu.isChecked());
+        row.setHnhap_giaoluuquocte(cb_hn_GluuQuocTe.isChecked());
+        row.setHnhap_thamgiahoatdonghoinhap(cb_hn_hoatdongHN.isChecked());
+        row.setUutien_bieuduongkhenthuong(cb_ut_khenthuong.isChecked());
+        row.setUutien_duocketnapdang(cb_ut_utuDang.isChecked());
+        row.setUutien_hienmau(cb_ut_hienmau.isChecked());
+
+        return row;
+    }
+
+    public void doSuaSV5T(Row row) {
+        a.sharedPreferences = getSharedPreferences(a.MyPREFERENCES, Context.MODE_PRIVATE);
+        String token = "Bearer " + a.sharedPreferences.getString(a.Token, "");
+        String id = row.getId();
+        a.apiService = ApiUtils.getUserService();
+        Call<TTinTChiSV5T> call = a.apiService.suaTTinTChiSV5T(id, token, row);
+        call.enqueue(new Callback<TTinTChiSV5T>() {
+            @Override
+            public void onResponse(Call<TTinTChiSV5T> call, Response<TTinTChiSV5T> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(SV5TActivity.this,"Đã chỉnh sửa thành công", Toast.LENGTH_LONG).show();
+                    intent = new Intent(SV5TActivity.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(SV5TActivity.this, "Đã Xảy Ra Lỗi!!Hãy Thử Đăng Nhập Lại", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TTinTChiSV5T> call, Throwable t) {
+                Toast.makeText(SV5TActivity.this, "Ket Noi Loi", Toast.LENGTH_LONG).show();
+                intent = new Intent(SV5TActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    int KiemTraDRL(int a)
+    {
+        if(a >= 100){
+            a = 100;
+        }
+        if(a <= 0){
+            a = 0;
+        }
+        return a;
+    }
+
+    float KiemTraDHT(float a)
+    {
+        if(a >= 4){
+            a = 4;
+        }
+        if(a <= 0){
+            a = 0;
+        }
+        return a;
+    }
+
     public void txt_TCDD_Action(View v)
     {
         LinearLayout layout_TCDD = findViewById(R.id.TTin_TCDD);
@@ -268,5 +460,8 @@ public class SV5TActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String getInfSV5T = getIntent().getStringExtra("InfoSV5T");
         row = gson.fromJson(getInfSV5T,Row.class);
+    }
+
+    class dkySV5T extends LoginActivity{
     }
 }
